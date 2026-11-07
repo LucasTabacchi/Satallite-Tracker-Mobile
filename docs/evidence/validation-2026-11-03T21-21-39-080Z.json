@@ -1,0 +1,109 @@
+[
+  {
+    "capturedAt": "2026-11-03T21:21:39.076Z",
+    "elements": {
+      "OBJECT_NAME": "ISS (ZARYA)",
+      "OBJECT_ID": "1998-067A",
+      "EPOCH": "2026-11-03T12:44:31.841376Z",
+      "MEAN_MOTION": 15.49164192,
+      "ECCENTRICITY": 0.0007153,
+      "INCLINATION": 51.633,
+      "RA_OF_ASC_NODE": 330.5488,
+      "ARG_OF_PERICENTER": 343.6919,
+      "MEAN_ANOMALY": 16.3838,
+      "EPHEMERIS_TYPE": 0,
+      "CLASSIFICATION_TYPE": "U",
+      "NORAD_CAT_ID": 25544,
+      "ELEMENT_SET_NO": 999,
+      "REV_AT_EPOCH": 59335,
+      "BSTAR": 0.0001053,
+      "MEAN_MOTION_DOT": 0.00005389,
+      "MEAN_MOTION_DDOT": 0
+    },
+    "references": [
+      {
+        "noradId": 25544,
+        "timestamp": "2026-11-03T21:21:33.000Z",
+        "latitude": -18.55571659235,
+        "longitude": 160.55900016091,
+        "altitudeKm": 427.86541453776
+      },
+      {
+        "noradId": 25544,
+        "timestamp": "2026-11-03T21:21:36.000Z",
+        "latitude": -18.702643501508,
+        "longitude": 160.67989720155,
+        "altitudeKm": 427.90125142069
+      },
+      {
+        "noradId": 25544,
+        "timestamp": "2026-11-03T21:21:38.000Z",
+        "latitude": -18.800539020871,
+        "longitude": 160.7606212755,
+        "altitudeKm": 427.92519807785
+      }
+    ],
+    "rows": [
+      {
+        "provider": "wheretheiss",
+        "noradId": 25544,
+        "timestamp": "2026-11-03T21:21:33.000Z",
+        "orbitalEpoch": "2026-11-03T12:44:31.841376Z",
+        "orbitalAgeMs": 31027235,
+        "local": {
+          "latitude": -18.558931174940252,
+          "longitude": 160.56357958772725,
+          "altitudeKm": 427.8840524792731
+        },
+        "reference": {
+          "latitude": -18.55571659235,
+          "longitude": 160.55900016091,
+          "altitudeKm": 427.86541453776
+        },
+        "errorKm": 0.6408732183377519,
+        "surfaceErrorKm": 0.6002618005461446,
+        "altitudeErrorKm": 0.018637941513134137
+      },
+      {
+        "provider": "wheretheiss",
+        "noradId": 25544,
+        "timestamp": "2026-11-03T21:21:36.000Z",
+        "orbitalEpoch": "2026-11-03T12:44:31.841376Z",
+        "orbitalAgeMs": 31027235,
+        "local": {
+          "latitude": -18.705854833903377,
+          "longitude": 160.6844811084883,
+          "altitudeKm": 427.9198726086024
+        },
+        "reference": {
+          "latitude": -18.702643501508,
+          "longitude": 160.67989720155,
+          "altitudeKm": 427.90125142069
+        },
+        "errorKm": 0.6407009645573071,
+        "surfaceErrorKm": 0.6000980690342962,
+        "altitudeErrorKm": 0.018621187912401638
+      },
+      {
+        "provider": "wheretheiss",
+        "noradId": 25544,
+        "timestamp": "2026-11-03T21:21:38.000Z",
+        "orbitalEpoch": "2026-11-03T12:44:31.841376Z",
+        "orbitalAgeMs": 31027235,
+        "local": {
+          "latitude": -18.80374817556355,
+          "longitude": 160.7652081939863,
+          "altitudeKm": 427.9438079403426
+        },
+        "reference": {
+          "latitude": -18.800539020871,
+          "longitude": 160.7606212755,
+          "altitudeKm": 427.92519807785
+        },
+        "errorKm": 0.6405859560312525,
+        "surfaceErrorKm": 0.5999887543360358,
+        "altitudeErrorKm": 0.01860986249261032
+      }
+    ]
+  }
+]

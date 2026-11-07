@@ -1,0 +1,135 @@
+<!doctype html>
+<html lang="es">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <meta name="theme-color" content="#101816">
+  <meta name="description" content="Seguimiento de satélites: prototipo interactivo sin conexión con datos ilustrativos.">
+  <title>Orbit — Prototipo de seguimiento de satélites</title>
+  <link rel="icon" href="data:,">
+  <link rel="stylesheet" href="./preview.css">
+</head>
+<body>
+  <a class="skip-link" href="#main">Saltar al contenido</a>
+  <svg class="icon-definitions" xmlns="http://www.w3.org/2000/svg" aria-hidden="true"><defs>
+    <symbol id="i-orbit" viewBox="0 0 24 24"><circle cx="12" cy="12" r="3"/><ellipse cx="12" cy="12" rx="11" ry="5" transform="rotate(-40 12 12)"/><path d="M16 3a10 10 0 0 0-13 13M8 21a10 10 0 0 0 13-13"/></symbol>
+    <symbol id="i-track" viewBox="0 0 24 24"><circle cx="12" cy="12" r="8"/><path d="M12 1v6m0 10v6M1 12h6m10 0h6"/><circle cx="12" cy="12" r="2"/></symbol>
+    <symbol id="i-sky" viewBox="0 0 24 24"><path d="m12 2 2.8 7.2L22 12l-7.2 2.8L12 22l-2.8-7.2L2 12l7.2-2.8Z"/></symbol>
+    <symbol id="i-passes" viewBox="0 0 24 24"><path d="M3 17a9 9 0 0 1 18 0M3 21h18M12 8v4m-6 1 2 2m10-2-2 2"/><path d="m12 17 4-6"/></symbol>
+    <symbol id="i-library" viewBox="0 0 24 24"><rect x="3" y="3" width="7" height="7" rx="1"/><rect x="14" y="3" width="7" height="7" rx="1"/><rect x="3" y="14" width="7" height="7" rx="1"/><rect x="14" y="14" width="7" height="7" rx="1"/></symbol>
+    <symbol id="i-pin" viewBox="0 0 24 24"><path d="M19 10c0 5-7 11-7 11S5 15 5 10a7 7 0 1 1 14 0Z"/><circle cx="12" cy="10" r="2"/></symbol>
+    <symbol id="i-arrow" viewBox="0 0 24 24"><path d="M4 12h15m-6-6 6 6-6 6"/></symbol>
+    <symbol id="i-search" viewBox="0 0 24 24"><circle cx="10" cy="10" r="6"/><path d="m15 15 6 6"/></symbol>
+    <symbol id="i-bell" viewBox="0 0 24 24"><path d="M5 17h14l-2-4V9A5 5 0 0 0 7 9v4Zm5 3h4M12 2v2"/></symbol>
+    <symbol id="i-check" viewBox="0 0 24 24"><path d="m5 12 4 4L19 6"/></symbol>
+    <symbol id="i-close" viewBox="0 0 24 24"><path d="m6 6 12 12M6 18 18 6"/></symbol>
+    <symbol id="i-satellite" viewBox="0 0 48 48"><path d="m19 20 9-4 6 12-9 4Zm-6 1-9 4 5 11 9-4Zm21-10 9-4 5 11-9 4M16 26l5-2m11-5 5-2M27 32l-4 7m-7-1 12 5"/><path d="m8 29 9-4m21-9 9-4"/></symbol>
+  </defs></svg>
+
+  <aside class="sidebar">
+    <a class="brand" href="#track" aria-label="Orbit, vista de seguimiento"><svg class="brand-icon"><use href="#i-orbit"/></svg><span>orbit<span class="brand-period">.</span></span></a>
+    <span class="brand-caption">UN POCO MÁS CERCA DEL ESPACIO</span>
+    <nav class="navigation" aria-label="Navegación principal">
+      <a href="#track" data-page="track" aria-current="page"><svg><use href="#i-track"/></svg><span>Seguimiento</span><span class="nav-index">01</span></a>
+      <a href="#sky" data-page="sky"><svg><use href="#i-sky"/></svg><span>Cielo</span><span class="nav-index">02</span></a>
+      <a href="#passes" data-page="passes"><svg><use href="#i-passes"/></svg><span>Pases</span><span class="nav-index">03</span></a>
+      <a href="#catalog" data-page="catalog"><svg><use href="#i-library"/></svg><span>Catálogo</span><span class="nav-index">04</span></a>
+    </nav>
+    <div class="sidebar-footer"><span class="eyebrow">PARA MENTES CURIOSAS</span><p>Mira al cielo.<br>Hay mucho por descubrir.</p><span class="mono tiny">SEGUIMIENTO SATELITAL / TP7</span></div>
+  </aside>
+
+  <div class="workspace">
+    <header class="topbar">
+      <a class="mobile-brand brand" href="#track" aria-label="Orbit, vista de seguimiento"><svg class="brand-icon"><use href="#i-orbit"/></svg><span>orbit.</span></a>
+      <span class="desktop-label eyebrow">TU OBSERVATORIO ORBITAL</span>
+      <button class="observer-button" data-open="observer"><svg><use href="#i-pin"/></svg><span>Buenos Aires</span><span class="observer-arrow">↗</span></button>
+    </header>
+
+    <main id="main" tabindex="-1">
+      <div class="preview-notice"><span class="preview-dot"></span><strong id="scope-label">Seguimiento orbital</strong><span id="scope-note">Cargando datos orbitales</span></div>
+
+      <section id="page-track" class="page" aria-labelledby="track-title">
+        <div class="page-heading"><div><span class="eyebrow">01 / ÓRBITA TERRESTRE</span><h1 id="track-title">En órbita. <em>A la vista.</em></h1></div><a href="#catalog" class="text-link">Explorar catálogo <svg><use href="#i-arrow"/></svg></a></div>
+        <div class="map-feedback"><p id="map-status" data-state="loading">Consultando datos orbitales…</p><button id="map-retry" hidden>Reintentar conexión</button></div>
+        <div class="tracking-layout">
+          <section class="map-panel" aria-label="Mapa mundial de seguimiento de satélites">
+            <div class="map-top"><span class="map-badge"><span class="status-dot"></span><span id="map-active">ISS · 25544</span></span><span id="map-clock" class="mono tiny">ESPERANDO DATOS</span></div>
+            <div class="map-canvas">
+              <svg class="world-map" viewBox="0 0 1000 550" role="img" aria-labelledby="map-label map-description">
+                <title id="map-label">Mapa orbital calculado</title><desc id="map-description">Mapa mundial esquemático con posición, trayectoria y cobertura calculadas con SGP4. La cartografía es aproximada y no es apta para navegación.</desc>
+                <defs><pattern id="grid" width="83.333" height="91.667" patternUnits="userSpaceOnUse"><path d="M83.333 0H0V91.667" fill="none" stroke="#33443c" stroke-width="0.65"/></pattern><radialGradient id="map-glow"><stop stop-color="#344b31" stop-opacity=".36"/><stop offset="1" stop-color="#17211e" stop-opacity="0"/></radialGradient></defs>
+                <rect x="-1000" width="3000" height="550" fill="url(#grid)"/><ellipse cx="405" cy="320" rx="340" ry="260" fill="url(#map-glow)"/>
+                <g id="world-land" class="land" fill="#314039" stroke="#728071" stroke-opacity=".25" stroke-width="1.2">
+                  <path d="M62 111 91 92 119 98 142 78 174 90 207 79 233 93 261 91 274 115 290 116 293 137 317 149 302 166 285 173 277 194 255 208 247 231 230 239 219 267 201 259 184 230 173 215 151 204 147 184 130 174 119 144 95 145 82 130 55 130Z"/>
+                  <path d="m238 239 21 9 17 19 20 9 17 6 7 16-19 2-17-14-17-4-12-18-18-10Z"/>
+                  <path d="m306 289 26-8 31 8 27 8 21 25 31 12-1 27-22 23-13 31-22 21-11 35-17 28-16 7-8-31 6-37-12-29-9-36-17-28-5-31Z"/>
+                  <path d="m301 57 47-17 44 10-4 28-21 29-17 17-23-5-12-28Z"/>
+                  <path d="m465 162 14-15 16 5 8-21 17-13 8-36 15 2 5 34-11 25 19 7 15-10 15 15-5 26-25 1-8 16-25-1-4 15-27 3-19-18-19 1-3-19Z"/>
+                  <path d="m469 222 37-14 28 11 20-2 19 19 10 33 21 16-12 33-28 27-11 38-21 14-13-18-8-33-23-24-29-15-14-31 5-32Z"/>
+                  <path d="m574 145 23-25 26-4 11-22 37 3 29-15 41 14 28-4 31 21 35-5 23 17 37 1 24 16-14 17-31 7-8 24-37 5-18 23-27 1-6 27-28 6-11 30-19-12-8-29-20-11-23 7-4 21-17 27-17-15-12-34-28-14-28 6-13-25-13-10-6-23Z"/>
+                  <path d="m692 270 20 10 11 26 21 18 3 25-15-8-6-26-14-8-8-21Zm71 72 27 7 13 12 28 2 14 10-33 3-26-13-23-6Z"/>
+                  <path d="m796 388 28-16 15-19 20 10 24-4 20 23 10 28-10 20-23 7-29-10-23 1-24-10-16-12Z"/>
+                  <path d="m928 426 11-11 5 16-13 21-11 4Zm-335-67 11-22 6 18-10 31-10-4ZM856 223l8-21 9-8 1 21-13 21Z"/>
+                  <path d="m7 516 58-9 55 7 52-4 64 12 72-8 61 6 60-13 78 14 53-11 63 5 57-10 63 12 64-8 67 12 63-8 52 11 66-6v32H7Z"/>
+                </g>
+                <use href="#world-land" x="-1000"/><use href="#world-land" x="1000"/>
+                <g fill="#84978a" font-family="monospace" font-size="10" letter-spacing="2"><text x="164" y="162">AMÉRICA DEL NORTE</text><text x="299" y="369">AMÉRICA</text><text x="293" y="385">DEL SUR</text><text x="504" y="281">ÁFRICA</text><text x="672" y="172">ASIA</text><text x="796" y="409">AUSTRALIA</text><text x="48" y="273" opacity=".6">0°</text></g>
+                <path d="M-1000 275H2000" stroke="#718070" stroke-dasharray="4 8" opacity=".32"/>
+                <g id="ground-track" hidden fill="none" stroke="#d1f5a2" stroke-width="2"></g>
+                <g id="footprint" hidden></g>
+                <g id="satellite-marker" hidden transform="translate(380 344)"><circle r="20" fill="#d1f5a2" fill-opacity=".08"/><circle r="11" fill="#d1f5a2" fill-opacity=".18"/><circle r="4" fill="#e3ffc1"/><path d="m9-12 18-24h63" fill="none" stroke="#d1f5a2" stroke-width="1"/><rect x="28" y="-57" width="111" height="25" rx="4" fill="#d1f5a2"/><text id="marker-name" x="38" y="-40" fill="#162215" font-family="monospace" font-size="12">ISS · 25544</text></g>
+                <g id="observer-marker" transform="translate(337 372)"><path d="M-5 0h10M0-5v10" stroke="#e8e9df"/><text x="-25" y="24" fill="#c3cdc2" font-family="monospace" font-size="10">OBSERVADOR</text></g>
+              </svg>
+            </div>
+            <div class="map-bottom"><div class="map-legend"><span><i class="line-swatch"></i>Próxima órbita</span><span><i class="line-swatch past"></i>Órbita anterior</span></div><span class="map-caption mono">CARTOGRAFÍA ESQUEMÁTICA</span></div>
+            <div class="map-controls" aria-label="Capas del mapa"><button id="toggle-track" aria-pressed="true">Trayectoria</button><button id="toggle-footprint" aria-pressed="true">Cobertura</button></div>
+          </section>
+
+          <section class="satellite-card" aria-label="Satélite seleccionado">
+            <div class="card-topline"><span class="eyebrow">EN SEGUIMIENTO</span><a href="#catalog" class="icon-button" aria-label="Elegir un satélite"><svg><use href="#i-arrow"/></svg></a></div>
+            <div class="satellite-identity"><div class="satellite-illustration"><svg viewBox="0 0 48 48"><use href="#i-satellite"/></svg><span class="orbit-ring"></span></div><div><span id="satellite-kind" class="subtle">Estación tripulada</span><h2 id="satellite-short">ISS</h2><p id="satellite-subtitle">Estación Espacial Internacional</p></div></div>
+            <div class="identifier"><span id="satellite-norad" class="mono">NORAD 25544</span><span class="pill">LEO</span></div>
+            <dl class="telemetry"><div><dt>Altitud</dt><dd><span id="altitude">—</span><small>km</small></dd></div><div><dt>Velocidad</dt><dd><span id="velocity">—</span><small>km/s</small></dd></div><div><dt>Período orbital</dt><dd><span id="period">—</span><small>min</small></dd></div><div><dt>Inclinación</dt><dd><span id="inclination">—</span><small>°</small></dd></div></dl>
+            <div class="coordinate-row mono"><span id="latitude">—</span><span id="longitude">—</span></div>
+            <button class="source-button" data-open="source"><span id="source-summary">Datos orbitales pendientes</span><span>↗</span></button>
+          </section>
+        </div>
+
+        <section class="next-pass-strip"><div class="pass-orbit-icon"><svg><use href="#i-passes"/></svg></div><div class="next-pass-copy"><span class="eyebrow">PRÓXIMO PASE DE LA ISS / EJEMPLO</span><h2>Tu próxima cita con el cielo.</h2><p>Suroeste → Noreste <span>·</span> Elevación máxima 64°</p></div><div class="next-pass-time"><strong>19:08</strong><span>LOCAL · UTC−03</span></div><a href="#passes" class="primary-button">Ver pase <svg><use href="#i-arrow"/></svg></a></section>
+        <p class="quiet-note">Posición, trayectoria y cobertura calculadas localmente con SGP4. El mapa base es esquemático. Los pases y las demás pantallas aún muestran ejemplos.</p>
+      </section>
+
+      <section id="page-sky" class="page" aria-labelledby="sky-title" hidden>
+        <div class="page-heading"><div><span class="eyebrow">02 / VISTA DEL OBSERVADOR</span><h1 id="sky-title">Encuentra tu <em>ángulo.</em></h1></div><span class="pill">ISS · PASE DE EJEMPLO</span></div>
+        <div class="sky-layout"><section class="sky-panel"><div class="panel-heading"><span class="eyebrow">MAPA DEL CIELO</span><span class="subtle">Norte arriba · horizonte en el borde</span></div>
+          <svg class="sky-plot" viewBox="0 0 500 500" role="img" aria-labelledby="sky-label"><title id="sky-label">Mapa polar ilustrativo del cielo: trayectoria de ejemplo de la ISS de suroeste a noreste, con elevación máxima de 64 grados</title><defs><radialGradient id="sky-glow"><stop stop-color="#304332"/><stop offset="1" stop-color="#16211c"/></radialGradient></defs><circle cx="250" cy="250" r="205" fill="url(#sky-glow)" stroke="#52644e"/><g fill="none" stroke="#52644e" stroke-opacity=".55"><circle cx="250" cy="250" r="137"/><circle cx="250" cy="250" r="68"/><path d="M45 250h410M250 45v410" stroke-dasharray="3 8"/></g><g fill="#95a38f" font-size="12" font-family="monospace"><text x="258" y="191">60°</text><text x="258" y="123">30°</text><text x="258" y="60">0°</text></g><g fill="#dce6d3" font-size="14" font-family="monospace" text-anchor="middle"><text x="250" y="25">N</text><text x="480" y="255">E</text><text x="250" y="486">S</text><text x="20" y="255">O</text></g><path d="M105 395Q185 110 395 105" fill="none" stroke="#d1f5a2" stroke-width="2.5"/><circle cx="105" cy="395" r="5" fill="#d1f5a2"/><circle cx="395" cy="105" r="5" fill="#d1f5a2"/><circle cx="243" cy="189" r="19" fill="#d1f5a2" opacity=".12"/><circle cx="243" cy="189" r="6" fill="#d1f5a2"/><g fill="#dce6d3" font-size="12" font-family="monospace"><text x="62" y="423">INICIO 19:08</text><text x="334" y="83">FIN 19:14</text><text x="269" y="184">ISS · 19:11</text></g></svg>
+          <div class="sky-footer"><span class="line-swatch"></span><span>Trayectoria de ejemplo</span><span class="mono">28 OCT 2026</span></div></section>
+          <section class="guidance-card"><span class="eyebrow">HACIA DÓNDE MIRAR</span><h2>Comienza por<br>el horizonte.</h2><p>La estación aparece por el suroeste y recorre el cielo hacia el noreste.</p><dl class="guidance-values"><div><dt>Azimut de ejemplo</dt><dd>225<span>° SO</span></dd></div><div><dt>Elevación máxima</dt><dd>64<span>°</span></dd></div></dl><div class="info-note">Brújula de demostración. El rumbo al norte verdadero y el GPS no están conectados en este prototipo.</div><a href="#passes" class="primary-button">Ver detalles del pase <svg><use href="#i-arrow"/></svg></a></section></div>
+        <p class="quiet-note">Un pase sobre el horizonte no garantiza que el satélite sea visible a simple vista. Aquí no se evalúan la iluminación solar ni las condiciones del cielo.</p>
+      </section>
+
+      <section id="page-passes" class="page" aria-labelledby="passes-title" hidden>
+        <div class="page-heading"><div><span class="eyebrow">03 / PLANIFICADOR DE PASES</span><h1 id="passes-title">No pierdas <em>el momento.</em></h1></div><span class="pill">ISS · 3 EJEMPLOS</span></div>
+        <div class="passes-layout"><section class="pass-list-panel"><div class="panel-heading"><h2>Miércoles, 28 de octubre</h2><span class="mono tiny">UTC−03</span></div><div id="pass-list"></div></section>
+          <aside class="reminder-card"><div class="reminder-icon"><svg><use href="#i-bell"/></svg></div><h2>Un aviso antes<br>de mirar al cielo.</h2><p>Elige un pase y cuándo recibir el aviso. La selección se conserva mientras exploras el prototipo.</p><label for="lead-time">Avisarme antes de un pase</label><select id="lead-time"><option value="5">5 minutos antes</option><option value="10" selected>10 minutos antes</option><option value="15">15 minutos antes</option></select><p id="reminder-summary" class="reminder-summary" role="status">No hay recordatorios de prueba seleccionados.</p><div class="info-note">Solo es una demostración. No se programa nada en tu dispositivo. Al conectar los recordatorios se solicitará permiso para enviar notificaciones.</div></aside></div>
+        <p class="quiet-note">Los horarios y las elevaciones de esta página son datos de ejemplo, no una predicción real de observación.</p>
+      </section>
+
+      <section id="page-catalog" class="page" aria-labelledby="catalog-title" hidden>
+        <div class="page-heading"><div><span class="eyebrow">04 / CATÁLOGO DE SATÉLITES</span><h1 id="catalog-title">Elige tu <em>perspectiva.</em></h1></div><span class="pill">4 OBJETOS DE EJEMPLO</span></div>
+        <div class="catalog-toolbar"><label class="search-field"><svg><use href="#i-search"/></svg><span class="sr-only">Buscar satélites por nombre o ID NORAD</span><input id="search" type="search" placeholder="Buscar por nombre o ID NORAD" autocomplete="off"></label><label class="state-select"><span>Estado de prueba</span><select id="catalog-state"><option value="ready">Disponible</option><option value="offline">Caché sin conexión</option><option value="loading">Cargando</option><option value="error">Error del proveedor</option></select></label></div>
+        <div class="filter-group" role="group" aria-label="Filtro de constelaciones"><button data-group="all" aria-pressed="true">Todos</button><button data-group="stations" aria-pressed="false">Estaciones</button><button data-group="science" aria-pressed="false">Ciencia</button><button data-group="constellations" aria-pressed="false">Constelaciones</button></div>
+        <p id="catalog-status" class="catalog-status" role="status"></p><div id="catalog-list" class="catalog-grid"></div>
+        <div class="catalog-footnote"><span class="status-dot"></span><span>Catálogo de prueba · ejemplos locales · sin solicitudes de red</span></div>
+      </section>
+    </main>
+    <footer class="workspace-footer"><span>EL ESPACIO ESTÁ MÁS CERCA DE LO QUE IMAGINAS.</span><span class="mono">ORBIT / ESTUDIO DE DISEÑO 01</span></footer>
+  </div>
+
+  <dialog id="observer-dialog" aria-labelledby="observer-title"><div class="dialog-heading"><span class="eyebrow">TU PUNTO DE OBSERVACIÓN</span><button class="icon-button" data-close aria-label="Cerrar detalles del observador"><svg><use href="#i-close"/></svg></button></div><svg class="dialog-icon"><use href="#i-pin"/></svg><h2 id="observer-title">Buenos Aires</h2><p>Ubicación de ejemplo utilizada en todas las vistas de este prototipo.</p><dl class="dialog-details"><div><dt>Latitud</dt><dd>34,6037° S</dd></div><div><dt>Longitud</dt><dd>58,3816° O</dd></div><div><dt>Altitud</dt><dd>25 m</dd></div><div><dt>Zona horaria</dt><dd>UTC−03:00</dd></div></dl><div class="info-note">No se ha accedido a tu ubicación. Las coordenadas manuales y el GPS se conectarán con la lógica del observador en la aplicación nativa.</div><button class="primary-button" data-close>Listo</button></dialog>
+  <dialog id="source-dialog" aria-labelledby="source-title"><div class="dialog-heading"><span class="eyebrow">TRANSPARENCIA DESDE EL DISEÑO</span><button class="icon-button" data-close aria-label="Cerrar detalles de los datos orbitales"><svg><use href="#i-close"/></svg></button></div><h2 id="source-title">Conoce tus datos.</h2><p id="source-description">Esperando datos orbitales válidos.</p><dl id="source-details" class="dialog-details"></dl><div class="info-note">Las posiciones se recalculan cada 2 segundos en esta pestaña. Los elementos orbitales se reutilizan durante 24 horas; una advertencia indica datos antiguos o sin renovar. La cobertura es geométrica para una elevación mínima de 0°.</div><button class="primary-button" data-close>Entendido</button></dialog>
+  <div id="toast" class="toast" role="status" aria-live="polite"></div>
+  <script type="importmap">{"imports":{"satellite.js":"/vendor/satellite.es.js"}}</script>
+  <script type="module" src="./preview.mjs"></script>
+</body>
+</html>

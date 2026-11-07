@@ -1,0 +1,10 @@
+node_modules/
+.expo/
+dist/
+coverage/
+.env*
+*.tsbuildinfo
+/android/
+/ios/
+/output/
+/.vscode/

@@ -1,0 +1,19 @@
+{
+  "expo": {
+    "name": "Satellite Tracker",
+    "slug": "tp7-satellite-tracker",
+    "scheme": "satellite-tracker",
+    "version": "0.1.0",
+    "orientation": "portrait",
+    "userInterfaceStyle": "dark",
+    "android": {
+      "package": "dev.tp7.satellitetracker"
+    },
+    "plugins": [
+      "expo-router",
+      "expo-background-task",
+      "expo-notifications",
+      ["expo-location", {"locationWhenInUsePermission": "Allow Satellite Tracker to calculate satellite directions from your location."}]
+    ]
+  }
+}

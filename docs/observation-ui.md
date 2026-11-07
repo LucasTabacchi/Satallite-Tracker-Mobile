@@ -1,0 +1,15 @@
+# Paneles nativos de observación
+
+`src/ui/observation-panels.tsx` exporta cinco paneles controlados y de presentación para React Native: `SkyPanel`, `PassesPanel`, `CompassPanel`, `ObserverForm` y `ValidationPanel`. No importan el controlador de la aplicación ni realizan operaciones de proveedores, ubicación, rumbo o notificaciones. El contenedor proporciona datos y funciones de devolución de llamada, por lo que los avisos de permisos aparecen solo después de una acción explícita del usuario.
+
+## Propiedades y responsabilidades del contenedor
+
+- `SkyPanelProps`: `elements`, `observer`, `pass`, y `loading` y `error` opcionales. El panel toma muestras de SGP4 local con `createSkyTrack` (máximo 100 muestras), representa el acimut/elevación con norte arriba y etiqueta el resultado como visibilidad geométrica/de radio, no como visibilidad óptica a simple vista.
+- `PassesPanelProps`: `passes`, `status` (`loading`, `ready`, `empty`, `error`), `error` opcional, `leadMinutes` seleccionado, `onLeadMinutesChange`, `remindersEnabled`, `onReminderChange(enabled, leadMinutes, pass)` y `reminderStatus` opcional. El controlador es responsable de la predicción de las próximas 48 horas y de la programación/cancelación real del sistema operativo; este componente solo presenta `AOS`, máximo y `LOS`, y llama a las acciones proporcionadas.
+- `CompassPanelProps`: estado del sensor `status`, `HeadingGuidance` opcional, `onStart`, `onStop` y `error` opcional. El controlador es responsable de la suscripción al sensor y su limpieza. Los rumbos no admitidos o poco confiables se distinguen de un objetivo bajo el horizonte.
+- `ObserverFormProps`: `initialValues` opcionales como cadenas, `onApply(observer)`, `onRequestGps` y `gpsStatus` opcional. El envío llama a la validación existente `parseObserver`; el GPS sigue siendo una acción explícita de devolución de llamada y nunca se ejecuta durante la importación o el montaje.
+- `ValidationPanelProps`: `row`, `loading` y `error` opcionales, booleanos de disponibilidad por proveedor y funciones de devolución de llamada opcionales para cada proveedor. El controlador/proxy es responsable de las operaciones autenticadas o remotas. No hay campos para credenciales; las acciones deshabilitadas explican por qué un proveedor no está disponible.
+
+Todo el texto visible y las etiquetas de accesibilidad usan español neutro. La disposición usa controles flexibles que pueden ajustarse en varias líneas, objetivos de acción de al menos 44 píxeles y texto multilínea para estados y errores en pantallas estrechas. El estilo sigue la paleta forest de Orbit. Las horas de validación se muestran en la zona horaria local del dispositivo; la fila conserva la marca de tiempo original, la época orbital, el proveedor, las coordenadas y el error en kilómetros del modelo de dominio.
+
+`src/ui/observation-model.ts` es un adaptador puro: analiza los valores del formulario manual mediante `parseObserver`, formatea valores locales válidos de fecha/hora y deriva un trayecto celeste muestreado y acotado reutilizando `track` y `projectSkyPosition`. No introduce coordenadas ni valores de tiempo de ejemplo.
