@@ -149,19 +149,6 @@ npm.cmd run export:android
 
 Las pruebas numéricas incluyen un caso histórico de Vanguard contrastado con [vectores de verificación de Vallado](https://github.com/aholinch/sgp4/blob/master/data/tcppver.out). La tolerancia de 10 m por componente corresponde a ese caso de regresión, no es una garantía de precisión para órbitas reales.
 
-## Estado de verificación y demo
-
-| Área | Evidencia o límite |
-| --- | --- |
-| Seguimiento en Android | En el Motorola se verificó el movimiento del marcador y de las coordenadas de la ISS (25544) y GPS BIIR-5 (26407). |
-| GPS y brújula | El usuario confirmó la obtención de ubicación. Se observó orientación real de la brújula tras una espera inicial; no se calibró contra un instrumento externo. |
-| Catálogo, cobertura y constelación | Se observaron 74 objetos meteorológicos de CelesTrak, una capa de 32 satélites GPS y el control de cobertura corregido en el teléfono. |
-| Comparación de posiciones | El [informe](docs/validation-report.md) reúne tres muestras públicas de la ISS frente a Where the ISS at? y una muestra real de N2YO frente al SGP4 de la app, para el mismo segundo UTC. |
-| Starlink | El CSV oficial respondió en la PC; en el Motorola se observó HTTP 403. No se afirma que la descarga móvil funcione. |
-| Pendientes | Respaldo real con Space-Track, validación N2YO desde la interfaz del teléfono y entrega real de notificaciones y ejecución en segundo plano en Android. |
-
-La grabación física se guardó localmente en `output/native-demo/TP7-Satellite-Tracker-demo-Motorola-20261107-194147.mp4`. Es una captura de **90 segundos sin audio** con la constelación GPS, cobertura, selección y seguimiento de la ISS, pases y carta celeste. **No incluye Starlink ni una notificación recibida**. `output/` no forma parte del repositorio. Véase [guía para grabar la demo](docs/demo-checklist.md).
-
 ## Documentación
 
 | Tema | Referencia |
