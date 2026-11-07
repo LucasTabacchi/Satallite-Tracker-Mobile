@@ -2,8 +2,6 @@
 
 Satellite Tracker, con la interfaz **Orbit**, es una aplicación móvil para explorar satélites artificiales, estimar su posición y planificar pases desde un punto de observación. Descarga elementos orbitales de catálogos reales y calcula las posiciones **en el dispositivo con SGP4**. El movimiento del mapa no es telemetría: la aplicación no recibe la ubicación del satélite cada dos segundos.
 
-El recorrido principal se verificó en un **Motorola Edge 30 Ultra**. La descarga directa de Starlink en ese teléfono, el respaldo autenticado de Space-Track y la entrega de una notificación por Android siguen siendo verificaciones separadas. Véase [estado de verificación](#estado-de-verificación-y-demo).
-
 ## Índice
 
 - [Inicio rápido](#inicio-rápido)
@@ -168,7 +166,6 @@ La grabación física se guardó localmente en `output/native-demo/TP7-Satellite
 
 | Tema | Referencia |
 | --- | --- |
-| Instalación, pruebas y demo | [Aceptación en Android](docs/device-acceptance.md) · [Guía de grabación](docs/demo-checklist.md) |
 | Proveedores y validación | [Fuentes de datos y proxy](docs/data-sources.md) · [Informe de posiciones](docs/validation-report.md) |
 | Arquitectura y pantallas | [Controlador de la app](docs/native-application.md) · [Paneles de observación](docs/observation-ui.md) |
 | Cálculos y mapa | [Lógica orbital](docs/orbital-logic.md) · [Geometría](docs/geometry.md) · [Mapa nativo](docs/native-map.md) |
